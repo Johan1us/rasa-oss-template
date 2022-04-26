@@ -1,0 +1,19 @@
+name: Build Docker Image Open Source Server
+on: push
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v2
+      - name: Open Source Server
+        uses: RasaHQ/rasa-action-server-gha@v1.0.4
+        with:
+          actions_directory: rasa-oss
+          docker_registry: docker.io
+          docker_registry_login: ${{ secrets.DOCKER_REGISTRY_LOGIN }}
+          docker_registry_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+          docker_image_name: ${{ secrets.DOCKER_HUB_LOGIN }}/rasa-oss-template
+          docker_image_tag: 1
+          docker_registry_push: true
+          dockerfile: rasa-oss/Dockerfile
